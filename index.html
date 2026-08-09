@@ -1,1 +1,666 @@
-<h1>Рейтинг ФОРМА20 ПРО</h1>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Рейтинг курса ФОРМА20 ПРО</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255, 122, 0, 0.18), transparent 32%),
+        linear-gradient(180deg, #0b0b0b, #050505);
+      color: #f5f5f5;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: auto;
+      padding: 34px 16px 56px;
+    }
+
+    .hero {
+      border: 1px solid rgba(255, 122, 0, 0.32);
+      background: linear-gradient(135deg, rgba(255, 122, 0, 0.12), #121212 38%, #080808);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    .label {
+      display: inline-block;
+      border: 1px solid rgba(255, 122, 0, 0.45);
+      color: #ffb000;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 900;
+      background: rgba(255, 122, 0, 0.08);
+    }
+
+    h1 {
+      margin: 18px 0 0;
+      font-size: clamp(34px, 7vw, 78px);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 18px 0 0;
+      color: #c7c7c7;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .rules,
+    .stats {
+      display: grid;
+      gap: 12px;
+    }
+
+    .rules {
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 22px;
+    }
+
+    .rule,
+    .stat {
+      border: 1px solid #2a2a2a;
+      background: rgba(18, 18, 18, 0.92);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .rule {
+      font-size: 13px;
+      color: #d7d7d7;
+    }
+
+    .rule b {
+      color: #fff;
+    }
+
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+      margin: 18px 0;
+    }
+
+    .stat-number {
+      font-size: 34px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .stat-text {
+      margin-top: 7px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .search-input,
+    .btn {
+      border-radius: 16px;
+      padding: 14px 16px;
+      font: inherit;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      color: #fff;
+      outline: none;
+    }
+
+    .btn {
+      border: 1px solid #2a2a2a;
+      color: #fff;
+      background: #1a1a1a;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff7a00, #ffb000);
+      color: #111;
+      border-color: transparent;
+    }
+
+    .search-info {
+      display: none;
+      text-align: center;
+      color: #999;
+      margin: -8px 0 14px;
+      font-size: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: rgba(18, 18, 18, 0.96);
+      border: 1px solid #2a2a2a;
+      border-radius: 24px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1080px;
+    }
+
+    thead {
+      background: #1d1d1d;
+    }
+
+    th,
+    td {
+      padding: 15px 13px;
+      text-align: left;
+      border-bottom: 1px solid #252525;
+      white-space: nowrap;
+    }
+
+    th {
+      color: #9d9d9d;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    td {
+      font-size: 15px;
+    }
+
+    tbody tr:hover {
+      background: #1a1a1a;
+    }
+
+    .place {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .name {
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .username {
+      color: #aaa;
+    }
+
+    .score {
+      color: #ffb000;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .level {
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .progress-up {
+      color: #22c55e;
+      font-weight: 900;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #3a3a3a;
+      background: #202020;
+      color: #e8e8e8;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .status-prize {
+      border-color: rgba(34, 197, 94, 0.35);
+      background: rgba(34, 197, 94, 0.12);
+      color: #b9f7cb;
+    }
+
+    .top-1 {
+      background: linear-gradient(90deg, rgba(255, 176, 0, 0.18), transparent 62%);
+    }
+
+    .top-2 {
+      background: linear-gradient(90deg, rgba(220, 220, 220, 0.12), transparent 62%);
+    }
+
+    .top-3 {
+      background: linear-gradient(90deg, rgba(205, 127, 50, 0.14), transparent 62%);
+    }
+
+    .medal {
+      display: inline-flex;
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #2a2a2a;
+      margin-right: 8px;
+      font-size: 14px;
+    }
+
+    .loading,
+    .error,
+    .empty {
+      padding: 30px 18px;
+      text-align: center;
+      color: #bbb;
+      line-height: 1.45;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 18px 11px 42px;
+      }
+
+      .hero {
+        padding: 20px 16px;
+        border-radius: 22px;
+      }
+
+      h1 {
+        font-size: clamp(34px, 13vw, 52px);
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+
+      .rules,
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      .rule {
+        font-size: 12px;
+      }
+
+      .stat {
+        padding: 14px 12px;
+      }
+
+      .stat-number {
+        font-size: 26px;
+      }
+
+      .stat-text {
+        font-size: 11.5px;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .table-wrap {
+        background: transparent;
+        border: none;
+        overflow: visible;
+        box-shadow: none;
+      }
+
+      table {
+        display: block;
+        min-width: 0;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      tr {
+        display: block;
+        padding: 15px;
+        background: #121212;
+        border: 1px solid #2a2a2a;
+        border-radius: 20px;
+      }
+
+      th,
+      td {
+        white-space: normal;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 6px 0;
+        border-bottom: none;
+        font-size: 14px;
+        line-height: 1.35;
+        text-align: right;
+      }
+
+      td::before {
+        color: #8d8d8d;
+        text-align: left;
+        flex: 0 0 auto;
+      }
+
+      td:nth-child(1)::before { content: "Место:"; }
+      td:nth-child(2)::before { content: "Имя:"; }
+      td:nth-child(3)::before { content: "Username:"; }
+      td:nth-child(4)::before { content: "Тренировок:"; }
+      td:nth-child(5)::before { content: "Средний уровень:"; }
+      td:nth-child(6)::before { content: "Текущий:"; }
+      td:nth-child(7)::before { content: "Уровень курса:"; }
+      td:nth-child(8)::before { content: "Гиря:"; }
+      td:nth-child(9)::before { content: "Прогресс:"; }
+      td:nth-child(10)::before { content: "Активность:"; }
+      td:nth-child(11)::before { content: "Итог:"; }
+      td:nth-child(12)::before { content: "Статус:"; }
+      td:nth-child(13)::before { content: "Рекомендация:"; }
+
+      .place,
+      .score,
+      .level {
+        font-size: 17px;
+      }
+
+      .name {
+        font-size: 16px;
+      }
+
+      .status {
+        white-space: normal;
+        text-align: right;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="label">ФОРМА20 ПРО · текущий поток</div>
+      <h1>Рейтинг курса</h1>
+      <p class="subtitle">
+        Побеждает не самый сильный на старте, а тот, кто стабильно проходит курс, сдаёт результаты и показывает прогресс.
+        Итоговый балл складывается из активности, уровня выполнения, бонуса за полный курс и прогресса между первой и финальной проверкой.
+      </p>
+
+      <div class="rules">
+        <div class="rule"><b>+15</b> за каждую сданную тренировку</div>
+        <div class="rule"><b>+1–6</b> за уровень выполнения</div>
+        <div class="rule"><b>+30</b> за 12 из 12 тренировок</div>
+        <div class="rule"><b>+прогресс</b> между 1 и 12 днём</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-number" id="totalAthletes">-</div>
+        <div class="stat-text">участников в рейтинге</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="totalWorkouts">-</div>
+        <div class="stat-text">сданных тренировок</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="avgScore">-</div>
+        <div class="stat-text">средний итоговый балл</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="prizeCount">-</div>
+        <div class="stat-text">в призовом зачёте</div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="searchInput" class="search-input" type="text" placeholder="Введите имя или username" />
+      <button class="btn btn-primary" onclick="searchAthlete()">Найти</button>
+      <button class="btn" onclick="resetSearch()">Сбросить</button>
+    </section>
+
+    <div id="searchInfo" class="search-info"></div>
+
+    <section class="table-wrap">
+      <div id="loading" class="loading">Загружаю рейтинг курса...</div>
+
+      <table id="ratingTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>Место</th>
+            <th>Имя</th>
+            <th>Username</th>
+            <th>Тренировок</th>
+            <th>Средний уровень</th>
+            <th>Текущий</th>
+            <th>Уровень курса</th>
+            <th>Гиря</th>
+            <th>Прогресс</th>
+            <th>Активность</th>
+            <th>Итог</th>
+            <th>Статус</th>
+            <th>Рекомендация</th>
+          </tr>
+        </thead>
+        <tbody id="ratingBody"></tbody>
+      </table>
+    </section>
+
+    <div class="footer">
+      Призовая тройка определяется после завершения курса. В призовой зачёт попадают участники, сдавшие минимум 10 тренировок из 12.
+    </div>
+  </main>
+
+  <script>
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/1Gyogt5QgiW4hALqcO6Dt59wkNlTJ__P1BJIxsd8b5Hc/gviz/tq?tqx=out:csv&sheet=PRO_%D0%A0%D0%B5%D0%B9%D1%82%D0%B8%D0%BD%D0%B3&range=A:M";
+
+    let ratingData = [];
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let insideQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"' && insideQuotes && nextChar === '"') {
+          cell += '"';
+          i++;
+        } else if (char === '"') {
+          insideQuotes = !insideQuotes;
+        } else if (char === "," && !insideQuotes) {
+          row.push(cell);
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+          if (cell || row.length) {
+            row.push(cell);
+            rows.push(row);
+            row = [];
+            cell = "";
+          }
+          if (char === "\r" && nextChar === "\n") i++;
+        } else {
+          cell += char;
+        }
+      }
+
+      if (cell || row.length) {
+        row.push(cell);
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    function toNumber(value) {
+      if (value === undefined || value === null || value === "") return 0;
+      return Number(String(value).replace("%", "").replace(",", ".")) || 0;
+    }
+
+    function medal(place) {
+      if (String(place) === "1") return '<span class="medal">🥇</span>';
+      if (String(place) === "2") return '<span class="medal">🥈</span>';
+      if (String(place) === "3") return '<span class="medal">🥉</span>';
+      return "";
+    }
+
+    function renderTable(rows) {
+      ratingData = rows
+        .slice(1)
+        .filter(row => row[0] && row[1])
+        .map(row => ({
+          place: row[0],
+          name: row[1],
+          username: row[2] || "",
+          workouts: toNumber(row[3]),
+          avgLevel: toNumber(row[4]),
+          currentLevel: row[5] || "",
+          courseLevel: row[6] || "",
+          kettlebell: row[7] || "",
+          progress: row[8] || "",
+          activity: toNumber(row[9]),
+          total: toNumber(row[10]),
+          recommendation: row[11] || "",
+          status: row[12] || ""
+        }));
+
+      renderRows(ratingData);
+      updateStats(ratingData);
+
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("ratingTable").style.display = "table";
+    }
+
+    function renderRows(data) {
+      const body = document.getElementById("ratingBody");
+      body.innerHTML = "";
+
+      if (!data.length) {
+        body.innerHTML = '<tr><td colspan="13" class="empty">Пока нет сданных результатов. Рейтинг появится после первой отправки в боте.</td></tr>';
+        return;
+      }
+
+      data.forEach(item => {
+        const tr = document.createElement("tr");
+
+        if (String(item.place) === "1") tr.classList.add("top-1");
+        if (String(item.place) === "2") tr.classList.add("top-2");
+        if (String(item.place) === "3") tr.classList.add("top-3");
+
+        const statusClass = item.status.includes("Призовой") ? "status status-prize" : "status";
+        const username = item.username ? "@" + String(item.username).replace(/^@/, "") : "—";
+
+        tr.innerHTML = `
+          <td><span class="place">${medal(item.place)}${item.place}</span></td>
+          <td><span class="name">${item.name}</span></td>
+          <td><span class="username">${username}</span></td>
+          <td>${item.workouts}</td>
+          <td>${item.avgLevel ? item.avgLevel.toFixed(2).replace(".", ",") : "—"}</td>
+          <td><span class="level">${item.currentLevel || "—"}</span></td>
+          <td><span class="level">${item.courseLevel || "—"}</span></td>
+          <td>${item.kettlebell ? item.kettlebell + " кг" : "—"}</td>
+          <td><span class="progress-up">${item.progress || "—"}</span></td>
+          <td>${item.activity}</td>
+          <td><span class="score">${item.total}</span></td>
+          <td><span class="${statusClass}">${item.status || "—"}</span></td>
+          <td>${item.recommendation || "—"}</td>
+        `;
+
+        body.appendChild(tr);
+      });
+    }
+
+    function updateStats(data) {
+      const totalAthletes = data.length;
+      const totalWorkouts = data.reduce((sum, item) => sum + item.workouts, 0);
+      const avgScore = totalAthletes
+        ? Math.round(data.reduce((sum, item) => sum + item.total, 0) / totalAthletes)
+        : 0;
+      const prizeCount = data.filter(item => item.workouts >= 10).length;
+
+      document.getElementById("totalAthletes").textContent = totalAthletes;
+      document.getElementById("totalWorkouts").textContent = totalWorkouts;
+      document.getElementById("avgScore").textContent = avgScore;
+      document.getElementById("prizeCount").textContent = prizeCount;
+    }
+
+    function searchAthlete() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const info = document.getElementById("searchInfo");
+
+      if (!query) return;
+
+      const filtered = ratingData.filter(item =>
+        item.name.toLowerCase().includes(query) ||
+        item.username.toLowerCase().includes(query)
+      );
+
+      renderRows(filtered);
+
+      info.style.display = "block";
+      info.textContent = filtered.length ? `Найдено: ${filtered.length}` : "Ничего не найдено";
+    }
+
+    function resetSearch() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("searchInfo").style.display = "none";
+      renderRows(ratingData);
+    }
+
+    document.getElementById("searchInput").addEventListener("keydown", event => {
+      if (event.key === "Enter") searchAthlete();
+    });
+
+    fetch(CSV_URL)
+      .then(response => {
+        if (!response.ok) throw new Error("CSV недоступен");
+        return response.text();
+      })
+      .then(text => renderTable(parseCSV(text)))
+      .catch(error => {
+        document.getElementById("loading").innerHTML =
+          "Не удалось загрузить рейтинг. Проверь публикацию Google-таблицы и доступ к CSV.";
+        document.getElementById("loading").className = "error";
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
