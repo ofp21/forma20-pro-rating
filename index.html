@@ -401,7 +401,7 @@
       <div class="rules">
         <div class="rule"><b>Место</b> — позиция в рейтинге курса</div>
         <div class="rule"><b>Гиря</b> — текущий вес, с которым участник сдаёт задания</div>
-        <div class="rule"><b>Средний уровень</b> — средний результат по сданным тренировкам</div>
+        <div class="rule"><b>Средний уровень</b> — до 5, выше потолка курса — 5+</div>
         <div class="rule"><b>Общий балл</b> — активность, уровень и бонусы курса</div>
       </div>
     </section>
@@ -504,9 +504,48 @@
       return rows;
     }
 
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
     function toNumber(value) {
       if (value === undefined || value === null || value === "") return 0;
-      return Number(String(value).replace("%", "").replace(",", ".")) || 0;
+
+      return Number(
+        String(value)
+          .replace("%", "")
+          .replace("+", "")
+          .replace(",", ".")
+      ) || 0;
+    }
+
+    function formatOneDecimal(value) {
+      const number = Number(value) || 0;
+
+      if (Math.abs(number - Math.round(number)) < 0.000001) {
+        return String(Math.round(number));
+      }
+
+      return number.toFixed(1).replace(".", ",");
+    }
+
+    function formatLevelCell(value) {
+      const raw = String(value || "").trim();
+
+      if (!raw) return "—";
+      if (raw === "5+") return "5+";
+
+      const number = toNumber(raw);
+
+      if (!number) return raw;
+      if (number > 5) return "5+";
+
+      return formatOneDecimal(number);
     }
 
     function medal(place) {
@@ -520,15 +559,22 @@
       ratingData = rows
         .slice(1)
         .filter(row => row[0] && row[1])
-        .map(row => ({
-          place: row[0],
-          name: row[1],
-          username: row[2] || "",
-          kettlebell: row[7] || "",
-          avgLevel: toNumber(row[4]),
-          totalScore: toNumber(row[10]),
-          workouts: toNumber(row[3])
-        }));
+        .map(row => {
+          const avgLevelRaw = row[4] || "";
+          const avgLevelDisplay = formatLevelCell(avgLevelRaw);
+          const avgLevelNumber = avgLevelDisplay === "5+" ? 5 : toNumber(avgLevelDisplay);
+
+          return {
+            place: row[0],
+            name: row[1],
+            username: row[2] || "",
+            kettlebell: row[7] || "",
+            avgLevel: avgLevelDisplay,
+            avgLevelNumber: avgLevelNumber,
+            totalScore: toNumber(row[10]),
+            workouts: toNumber(row[3])
+          };
+        });
 
       renderRows(ratingData);
       updateStats(ratingData);
@@ -559,12 +605,12 @@
           : "—";
 
         tr.innerHTML = `
-          <td><span class="place">${medal(item.place)}${item.place}</span></td>
-          <td><span class="name">${item.name}</span></td>
-          <td><span class="username">${username}</span></td>
-          <td><span class="kettlebell">${item.kettlebell ? item.kettlebell + " кг" : "—"}</span></td>
-          <td><span class="level">${item.avgLevel ? item.avgLevel.toFixed(2).replace(".", ",") : "—"}</span></td>
-          <td><span class="score">${item.totalScore}</span></td>
+          <td><span class="place">${medal(item.place)}${escapeHTML(item.place)}</span></td>
+          <td><span class="name">${escapeHTML(item.name)}</span></td>
+          <td><span class="username">${escapeHTML(username)}</span></td>
+          <td><span class="kettlebell">${item.kettlebell ? escapeHTML(item.kettlebell) + " кг" : "—"}</span></td>
+          <td><span class="level">${escapeHTML(item.avgLevel)}</span></td>
+          <td><span class="score">${escapeHTML(item.totalScore)}</span></td>
         `;
 
         body.appendChild(tr);
@@ -579,7 +625,7 @@
       }, 0);
 
       const avgLevel = totalAthletes
-        ? data.reduce((sum, item) => sum + item.avgLevel, 0) / totalAthletes
+        ? data.reduce((sum, item) => sum + item.avgLevelNumber, 0) / totalAthletes
         : 0;
 
       const avgScore = totalAthletes
@@ -588,9 +634,7 @@
 
       document.getElementById("totalAthletes").textContent = totalAthletes;
       document.getElementById("totalWorkouts").textContent = totalWorkouts;
-      document.getElementById("avgLevel").textContent = avgLevel
-        ? avgLevel.toFixed(2).replace(".", ",")
-        : "0";
+      document.getElementById("avgLevel").textContent = formatOneDecimal(avgLevel);
       document.getElementById("avgScore").textContent = avgScore;
     }
 
@@ -623,7 +667,7 @@
       if (event.key === "Enter") searchAthlete();
     });
 
-    fetch(CSV_URL)
+    fetch(CSV_URL + "&cache=" + Date.now())
       .then(response => {
         if (!response.ok) throw new Error("CSV недоступен");
         return response.text();
