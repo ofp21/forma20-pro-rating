@@ -20,7 +20,7 @@
     }
 
     .page {
-      max-width: 1240px;
+      max-width: 1120px;
       margin: auto;
       padding: 34px 16px 56px;
     }
@@ -84,6 +84,7 @@
     .rule {
       font-size: 13px;
       color: #d7d7d7;
+      line-height: 1.35;
     }
 
     .rule b {
@@ -105,6 +106,7 @@
       margin-top: 7px;
       color: #999;
       font-size: 13px;
+      line-height: 1.25;
     }
 
     .toolbar {
@@ -127,6 +129,10 @@
       border: 1px solid #2a2a2a;
       color: #fff;
       outline: none;
+    }
+
+    .search-input:focus {
+      border-color: rgba(255, 122, 0, 0.7);
     }
 
     .btn {
@@ -162,7 +168,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1080px;
+      min-width: 780px;
     }
 
     thead {
@@ -171,7 +177,7 @@
 
     th,
     td {
-      padding: 15px 13px;
+      padding: 16px 14px;
       text-align: left;
       border-bottom: 1px solid #252525;
       white-space: nowrap;
@@ -185,7 +191,7 @@
     }
 
     td {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     tbody tr:hover {
@@ -206,37 +212,21 @@
       color: #aaa;
     }
 
-    .score {
-      color: #ffb000;
-      font-size: 20px;
+    .kettlebell {
       font-weight: 900;
+      color: #fff;
     }
 
     .level {
       font-weight: 900;
       font-size: 18px;
+      color: #ffffff;
     }
 
-    .progress-up {
-      color: #22c55e;
+    .score {
+      color: #ffb000;
+      font-size: 20px;
       font-weight: 900;
-    }
-
-    .status {
-      display: inline-flex;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #3a3a3a;
-      background: #202020;
-      color: #e8e8e8;
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .status-prize {
-      border-color: rgba(34, 197, 94, 0.35);
-      background: rgba(34, 197, 94, 0.12);
-      color: #b9f7cb;
     }
 
     .top-1 {
@@ -363,9 +353,9 @@
         display: flex;
         justify-content: space-between;
         gap: 12px;
-        padding: 6px 0;
+        padding: 7px 0;
         border-bottom: none;
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1.35;
         text-align: right;
       }
@@ -379,30 +369,18 @@
       td:nth-child(1)::before { content: "Место:"; }
       td:nth-child(2)::before { content: "Имя:"; }
       td:nth-child(3)::before { content: "Username:"; }
-      td:nth-child(4)::before { content: "Тренировок:"; }
+      td:nth-child(4)::before { content: "Гиря:"; }
       td:nth-child(5)::before { content: "Средний уровень:"; }
-      td:nth-child(6)::before { content: "Текущий:"; }
-      td:nth-child(7)::before { content: "Уровень курса:"; }
-      td:nth-child(8)::before { content: "Гиря:"; }
-      td:nth-child(9)::before { content: "Прогресс:"; }
-      td:nth-child(10)::before { content: "Активность:"; }
-      td:nth-child(11)::before { content: "Итог:"; }
-      td:nth-child(12)::before { content: "Статус:"; }
-      td:nth-child(13)::before { content: "Рекомендация:"; }
+      td:nth-child(6)::before { content: "Общий балл:"; }
 
       .place,
       .score,
       .level {
-        font-size: 17px;
+        font-size: 18px;
       }
 
       .name {
-        font-size: 16px;
-      }
-
-      .status {
-        white-space: normal;
-        text-align: right;
+        font-size: 17px;
       }
     }
   </style>
@@ -412,17 +390,19 @@
   <main class="page">
     <section class="hero">
       <div class="label">ФОРМА20 ПРО · текущий поток</div>
+
       <h1>Рейтинг курса</h1>
+
       <p class="subtitle">
-        Побеждает не самый сильный на старте, а тот, кто стабильно проходит курс, сдаёт результаты и показывает прогресс.
-        Итоговый балл складывается из активности, уровня выполнения, бонуса за полный курс и прогресса между первой и финальной проверкой.
+        Рейтинг показывает активность участников курса, средний уровень выполнения заданий и общий балл.
+        Побеждает не тот, кто просто сильнее на старте, а тот, кто стабильно проходит курс и сдаёт результаты.
       </p>
 
       <div class="rules">
-        <div class="rule"><b>+15</b> за каждую сданную тренировку</div>
-        <div class="rule"><b>+1–6</b> за уровень выполнения</div>
-        <div class="rule"><b>+30</b> за 12 из 12 тренировок</div>
-        <div class="rule"><b>+прогресс</b> между 1 и 12 днём</div>
+        <div class="rule"><b>Место</b> — позиция в рейтинге курса</div>
+        <div class="rule"><b>Гиря</b> — текущий вес, с которым участник сдаёт задания</div>
+        <div class="rule"><b>Средний уровень</b> — средний результат по сданным тренировкам</div>
+        <div class="rule"><b>Общий балл</b> — активность, уровень и бонусы курса</div>
       </div>
     </section>
 
@@ -438,13 +418,13 @@
       </div>
 
       <div class="stat">
-        <div class="stat-number" id="avgScore">-</div>
-        <div class="stat-text">средний итоговый балл</div>
+        <div class="stat-number" id="avgLevel">-</div>
+        <div class="stat-text">средний уровень курса</div>
       </div>
 
       <div class="stat">
-        <div class="stat-number" id="prizeCount">-</div>
-        <div class="stat-text">в призовом зачёте</div>
+        <div class="stat-number" id="avgScore">-</div>
+        <div class="stat-text">средний общий балл</div>
       </div>
     </section>
 
@@ -465,24 +445,18 @@
             <th>Место</th>
             <th>Имя</th>
             <th>Username</th>
-            <th>Тренировок</th>
-            <th>Средний уровень</th>
-            <th>Текущий</th>
-            <th>Уровень курса</th>
             <th>Гиря</th>
-            <th>Прогресс</th>
-            <th>Активность</th>
-            <th>Итог</th>
-            <th>Статус</th>
-            <th>Рекомендация</th>
+            <th>Средний уровень</th>
+            <th>Общий балл</th>
           </tr>
         </thead>
+
         <tbody id="ratingBody"></tbody>
       </table>
     </section>
 
     <div class="footer">
-      Призовая тройка определяется после завершения курса. В призовой зачёт попадают участники, сдавшие минимум 10 тренировок из 12.
+      Итоговая тройка победителей определяется после завершения курса по общему баллу активности.
     </div>
   </main>
 
@@ -550,16 +524,10 @@
           place: row[0],
           name: row[1],
           username: row[2] || "",
-          workouts: toNumber(row[3]),
-          avgLevel: toNumber(row[4]),
-          currentLevel: row[5] || "",
-          courseLevel: row[6] || "",
           kettlebell: row[7] || "",
-          progress: row[8] || "",
-          activity: toNumber(row[9]),
-          total: toNumber(row[10]),
-          recommendation: row[11] || "",
-          status: row[12] || ""
+          avgLevel: toNumber(row[4]),
+          totalScore: toNumber(row[10]),
+          workouts: toNumber(row[3])
         }));
 
       renderRows(ratingData);
@@ -574,7 +542,8 @@
       body.innerHTML = "";
 
       if (!data.length) {
-        body.innerHTML = '<tr><td colspan="13" class="empty">Пока нет сданных результатов. Рейтинг появится после первой отправки в боте.</td></tr>';
+        body.innerHTML =
+          '<tr><td colspan="6" class="empty">Пока нет сданных результатов. Рейтинг появится после первой отправки в боте.</td></tr>';
         return;
       }
 
@@ -585,23 +554,17 @@
         if (String(item.place) === "2") tr.classList.add("top-2");
         if (String(item.place) === "3") tr.classList.add("top-3");
 
-        const statusClass = item.status.includes("Призовой") ? "status status-prize" : "status";
-        const username = item.username ? "@" + String(item.username).replace(/^@/, "") : "—";
+        const username = item.username
+          ? "@" + String(item.username).replace(/^@/, "")
+          : "—";
 
         tr.innerHTML = `
           <td><span class="place">${medal(item.place)}${item.place}</span></td>
           <td><span class="name">${item.name}</span></td>
           <td><span class="username">${username}</span></td>
-          <td>${item.workouts}</td>
-          <td>${item.avgLevel ? item.avgLevel.toFixed(2).replace(".", ",") : "—"}</td>
-          <td><span class="level">${item.currentLevel || "—"}</span></td>
-          <td><span class="level">${item.courseLevel || "—"}</span></td>
-          <td>${item.kettlebell ? item.kettlebell + " кг" : "—"}</td>
-          <td><span class="progress-up">${item.progress || "—"}</span></td>
-          <td>${item.activity}</td>
-          <td><span class="score">${item.total}</span></td>
-          <td><span class="${statusClass}">${item.status || "—"}</span></td>
-          <td>${item.recommendation || "—"}</td>
+          <td><span class="kettlebell">${item.kettlebell ? item.kettlebell + " кг" : "—"}</span></td>
+          <td><span class="level">${item.avgLevel ? item.avgLevel.toFixed(2).replace(".", ",") : "—"}</span></td>
+          <td><span class="score">${item.totalScore}</span></td>
         `;
 
         body.appendChild(tr);
@@ -610,16 +573,25 @@
 
     function updateStats(data) {
       const totalAthletes = data.length;
-      const totalWorkouts = data.reduce((sum, item) => sum + item.workouts, 0);
-      const avgScore = totalAthletes
-        ? Math.round(data.reduce((sum, item) => sum + item.total, 0) / totalAthletes)
+
+      const totalWorkouts = data.reduce((sum, item) => {
+        return sum + item.workouts;
+      }, 0);
+
+      const avgLevel = totalAthletes
+        ? data.reduce((sum, item) => sum + item.avgLevel, 0) / totalAthletes
         : 0;
-      const prizeCount = data.filter(item => item.workouts >= 10).length;
+
+      const avgScore = totalAthletes
+        ? Math.round(data.reduce((sum, item) => sum + item.totalScore, 0) / totalAthletes)
+        : 0;
 
       document.getElementById("totalAthletes").textContent = totalAthletes;
       document.getElementById("totalWorkouts").textContent = totalWorkouts;
+      document.getElementById("avgLevel").textContent = avgLevel
+        ? avgLevel.toFixed(2).replace(".", ",")
+        : "0";
       document.getElementById("avgScore").textContent = avgScore;
-      document.getElementById("prizeCount").textContent = prizeCount;
     }
 
     function searchAthlete() {
@@ -636,7 +608,9 @@
       renderRows(filtered);
 
       info.style.display = "block";
-      info.textContent = filtered.length ? `Найдено: ${filtered.length}` : "Ничего не найдено";
+      info.textContent = filtered.length
+        ? "Найдено: " + filtered.length
+        : "Ничего не найдено";
     }
 
     function resetSearch() {
